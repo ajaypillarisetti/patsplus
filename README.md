@@ -1,16 +1,13 @@
 # PATS+ Shiny Visualizer
 
-This is a simple visualization tool for PATS+ files built using R and Shiny. On first run, it will install required packages that are missing. 
+This is a simple visualization tool for PATS+ files built using R and Shiny. On first run, it will install required packages that are missing. It does require the shiny library.
 
 ```R
-library(shiny)
-library(ggplot2)
-library(reshape2)
-library(plyr)
-library(lubridate)
-library(data.table)
-library(dygraphs)
-library(xts)
+list.of.packages <- c("shiny")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages))(print(paste("The following packages are not installed: ", new.packages, sep="")))else(print("All packages installed"))
+if(length(new.packages)) install.packages(new.packages)
+lapply(list.of.packages,function(x){library(x,character.only=TRUE)}) 
 
 # Easiest way is to use runGitHub
 runGitHub("patsplus_visualizer", "ajaypillarisetti")
