@@ -1,6 +1,6 @@
 # PATS+ Shiny Visualizer
 
-This is a simple visualization tool for PATS+ files.
+This is a simple visualization tool for PATS+ files built using R and Shiny. On first run, it will install required packages that are missing. 
 
 ```R
 library(shiny)
