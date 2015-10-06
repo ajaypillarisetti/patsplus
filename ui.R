@@ -96,7 +96,7 @@ shinyUI(bootstrapPage(
 
 		row(
 			col(12, 
-				p(id="colophon",class='text-center', "He had, before this last expedition, twenty-five wounds upon him." / "Now it's twenty-seven.")
+				p(id="colophon",class='text-center', "He had, before this last expedition, twenty-five wounds upon him / Now it's twenty-seven.")
 			)
 		)
 	)
