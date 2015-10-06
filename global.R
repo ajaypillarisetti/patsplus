@@ -32,7 +32,10 @@ read.patsplus<- function(x, tzone="America/Los_Angeles"){
 		mediumwell <- fread(fn)
 		#remove cruft
 		unlink(fn)
-		setnames(mediumwell, c('datetime','V_power','degC_sys','degC_air','RH_air','degC_thermistor','usb_pwr','fanSetting','filterSetting','ref_sigDel','low20','high320'))
+		if(ncol(mediumwell)==12){
+			setnames(mediumwell, c('datetime','V_power','degC_sys','degC_air','RH_air','degC_thermistor','usb_pwr','fanSetting','filterSetting','ref_sigDel','low20','high320'))}else{
+			setnames(mediumwell, c('datetime','V_power','degC_sys','degC_air','RH_air','degC_CO','mV_CO','status','ref_sigDel','low20','high320'))				
+		}
 		mediumwell[,datetime:=ymd_hms(datetime, tz=tzone)]
 		#filename string extraction madness
 		mediumwell[,file:=x]
