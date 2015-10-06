@@ -58,20 +58,20 @@ shinyServer(function(input, output) {
 
 	#DYGRAPHS
 	output$temp <- renderDygraph({
-		dygraph(as.xts(datasetInput()[,c('degC_air'), with=F], order.by=datasetInput()$datetime), group='lab')%>% 
+		dygraph(as.xts(datasetInput()[,c('datetime', 'degC_air'), with=F]), group='lab')%>% 
 	    dyOptions(axisLineWidth = 1.5, fillGraph = F, drawGrid = FALSE, useDataTimezone=TRUE) %>%
 	    dyAxis("y", label = "Temp C") %>%
 	    dyAxis("x", label = "datetime")%>%
 		dyRangeSelector() 
 	})
 	output$low20 <- renderDygraph({
-		dygraph(as.xts(datasetInput()[,c('low20'), with=F], order.by=datasetInput()$datetime), group='lab')%>% 
+		dygraph(as.xts(datasetInput()[,c('datetime','low20'), with=F]), group='lab')%>% 
 	    dyOptions(axisLineWidth = 1.5, fillGraph = F, drawGrid = FALSE, useDataTimezone=TRUE) %>%
 	    dyAxis("y", label = "mv (low20)") %>%
 	    dyAxis("x", label = "")
 	})
 	output$high320 <- renderDygraph({
-		dygraph(as.xts(datasetInput()[,c('high320'), with=F], order.by=datasetInput()$datetime), group='lab')%>% 
+		dygraph(as.xts(datasetInput()[,c('datetime','high320'), with=F]), group='lab')%>% 
 	    dyOptions(axisLineWidth = 1.5, fillGraph = F, drawGrid = FALSE, useDataTimezone=TRUE) %>%
 	    dyAxis("y", label = "mv (high320)") %>%
 	    dyAxis("x", label = "")	
