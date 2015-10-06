@@ -58,7 +58,15 @@ shinyUI(bootstrapPage(
 						numericInput("tc_high", label = "Temp Coeff (High)", value = 4.0)
 					),
 					column(width=3,
-						numericInput("zero_dur", label = "Zero Duration (mins)", value = 600)
+						numericInput("zero_dur", label = "Zero Duration (mins)", value = 600),
+						selectizeInput("timezone", "Select Timezone", 
+				    		list(
+								"Africa/Accra",
+								"Asia/Kathmandu",
+								"Asia/Kolkata",
+								"Asia/Vientiane"
+							), selected="Asia/Vientiane",
+						options = list(create = TRUE))
 					)
 
 				)

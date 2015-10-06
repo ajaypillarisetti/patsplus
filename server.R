@@ -16,6 +16,10 @@ shinyServer(function(input, output) {
 
 	#read in data
 	datasetInput <- reactive({
+
+		Sys.setenv(TZ=input$timezone)
+		print(Sys.getenv("TZ"))
+
 	    inFile <- input$file1
     	if (is.null(inFile)){
       		return(NULL)
@@ -42,7 +46,7 @@ shinyServer(function(input, output) {
 				setnames(mediumwell, c('datetime','V_power','degC_sys','degC_air','RH_air','degC_thermistor','usb_pwr','fanSetting','filterSetting','ref_sigDel','low20','high320'))}else{
 				setnames(mediumwell, c('datetime','V_power','degC_sys','degC_air','RH_air','degC_CO','mV_CO','status','ref_sigDel','low20','high320'))				
 			}
-			mediumwell[,datetime:=ymd_hms(datetime, tz=tzone)]
+			mediumwell[,datetime:=ymd_hms(datetime, tz=input$timezone)]
 			#filename string extraction madness
 			mediumwell[,file:=x]
 
@@ -119,7 +123,7 @@ shinyServer(function(input, output) {
 
 	#PLOT OUTPUTS
 	output$fullplot<-renderPlot({
-		a<-qplot(datetime, value, data=melt(data_cleaned(), id.var='datetime', measure.var=c('degC_air',"RH_air",'low20', 'high320')), geom='line', color=variable) +theme_bw(12) + ylab('Value') + xlab('Datetime') + facet_wrap(~variable, ncol=1, scales='free') + theme(legend.position='bottom')
+		a<-qplot(datetime, value, data=melt(data_cleaned(), id.var='datetime', measure.var=c('pm_mass','degC_air',"RH_air",'low20', 'high320')), geom='line', color=variable) +theme_bw(12) + ylab('Value') + xlab('Datetime') + facet_wrap(~variable, ncol=1, scales='free') + theme(legend.position='bottom')
 		print(a)
 	})
 
