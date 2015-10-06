@@ -13,3 +13,4 @@ library(xts)
 
 #organize and load data
 #data <- list.files(paste(getwd(),'/data',sep=""),recursive=T,include.dirs=T, full.names=T, pattern='SQD')
+

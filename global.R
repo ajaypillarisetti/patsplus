@@ -15,34 +15,6 @@ alt.diff <- function (x, n = 1, na.pad = TRUE) {
   diffs <- c(NAs, diff(x, n))
 }
 
-read.patsplus<- function(x, tzone="America/Los_Angeles"){
-	#confirm file contains data
-	fileCheck <- file.info(x)$size>0
-	if(fileCheck){
-		#read in without regard for delimiters
-		raw <- read.delim(x)
-		#use a regular expression to identify lines that are data, denote the line number
-		kLines <- as.numeric(sapply(raw, function(x) grep('[0-9/0-9/0-9]{2,} [0-9:]{6,},[0-9.,]{3,}',x)))
-		#convert to character
-		rare <- as.character(raw[kLines,])
-		#create a tempfile and write to it
-		fn <- tempfile()
-		write(rare, file=fn)
-		#read in using fread
-		mediumwell <- fread(fn)
-		#remove cruft
-		unlink(fn)
-		if(ncol(mediumwell)==12){
-			setnames(mediumwell, c('datetime','V_power','degC_sys','degC_air','RH_air','degC_thermistor','usb_pwr','fanSetting','filterSetting','ref_sigDel','low20','high320'))}else{
-			setnames(mediumwell, c('datetime','V_power','degC_sys','degC_air','RH_air','degC_CO','mV_CO','status','ref_sigDel','low20','high320'))				
-		}
-		mediumwell[,datetime:=ymd_hms(datetime, tz=tzone)]
-		#filename string extraction madness
-		mediumwell[,file:=x]
-	}else{warning(paste("File", x, "does not contain valid data", sep=" "))}
-}
-
-
 Mode <- function(x) {
   ux <- unique(x)
   ux[which.max(tabulate(match(x, ux)))]

@@ -30,19 +30,6 @@ shinyUI(bootstrapPage(
 			col(12, 
 				h2('disPATSchR'), 
 		      	h4('PATS+ File Processor'),
-			 #    selectInput("timezone", "Select Timezone", 
-			 #    	list(
-	   #                "Africa/Accra",
-	   #                "Africa/Dakar",
-	   #                "Africa/Nairobi",
-	   #                "America/Chicago",
-	   #                "America/Los_Angeles",
-	   #                "America/New_York",
-	   #                "Asia/Bangkok",
-	   #                "Asia/Beirut",
-	   #                "Asia/Calcutta",
-	   #                "Asia/Katmandu"
-				# )),
 		      	br()
 			)
 		),
@@ -50,12 +37,30 @@ shinyUI(bootstrapPage(
 		tabsetPanel(
 			tabPanel("File Selection",
 				row(
-					br(),
-			      	fileInput('file1', 'Choose a PATS+ file', 
-			      		accept=c('text/csv', 'text/comma-separated-values,text/plain', '.csv', '.txt', '.TXT'))
+					column(width=6,
+						br(),
+				      	fileInput('file1', 'Choose a PATS+ file', 
+				      		accept=c('text/csv', 'text/comma-separated-values,text/plain', '.csv', '.txt', '.TXT'))
+				    )
 			    ),
 				row(
 					dataTableOutput('dateTable')
+				),
+				hr(),
+				h4("Millivolt-to-Mass Algorithm Parameters"),
+				row(
+					column(width=3,
+						numericInput("pc_low", label = "Photoelectric Coeff (Low)", value = 21.64),
+						numericInput("tc_low", label = "Temp Coeff (Low)", value = 0.202)
+					),
+					column(width=3,
+						numericInput("pc_high", label = "Photoelectric Coeff (High)", value = 1),
+						numericInput("tc_high", label = "Temp Coeff (High)", value = 4.0)
+					),
+					column(width=3,
+						numericInput("zero_dur", label = "Zero Duration (mins)", value = 600)
+					)
+
 				)
 			),
 
@@ -65,8 +70,9 @@ shinyUI(bootstrapPage(
 
 			tabPanel("Interactive Plot",
 				br(),
-				row(dygraphOutput("low20", height='300px')),
-				row(dygraphOutput("high320", height='300px')),
+				row(dygraphOutput("mass", height='300px')),
+				row(dygraphOutput("low20", height='200px')),
+				row(dygraphOutput("high320", height='200px')),
 				row(dygraphOutput("temp", height='200px'))
 			),
 			
